@@ -7,7 +7,7 @@ import Jumbotron from "./Jumbotron";
 import Panel from "./Panel";
 import ArticleDetails from "./ArticleDetails";
 import Scrapper from "../utils/Scrapper";
-// import {Panel}  from "react-bootstrap";
+import {Panel}  from "react-bootstrap";
 
 
 class Articles extends Component {

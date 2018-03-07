@@ -1,6 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import Articles from "./components/Articles";
 
-const App = () => <Articles />
+class App extends Component {
+	render() {
+		return <Articles />;
+	}
+}
 
 export default App;
