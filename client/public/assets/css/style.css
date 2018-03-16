@@ -1,0 +1,21 @@
+h1 {
+	text-align: center;
+}
+
+.container {
+	margin: 75px !important;
+}
+
+.commentButton,
+.saveButton {
+	float: right;
+	margin: 5px;
+}
+
+#saveComment {
+	float: right;
+}
+
+body {
+	padding-top: 70px;
+}

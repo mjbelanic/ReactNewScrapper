@@ -1,94 +1,97 @@
 const path = require("path");
-const router = require("express").Router();
-var db = require("../models");
-const commentRoutes = require("./comments");
 var request = require("request");
 var cheerio = require("cheerio");
-var Article = require("./models/Article.js");
+var Article = require("../models/Articles");
+var Comment = require("../models/Comments");
+const mongoose = require("mongoose");
 
-router.use("/comments" , commentRoutes);
+module.exports = app => {
+	//Scrape function
+	mongoose.Promise = global.Promise;
+	mongoose.connect(
+		process.env.MONGODB_URI || "mongodb://localhost/newScrapper",
+		{
+			useMongoClient: true
+		}
+	);
+	const db = mongoose.connection;
 
-//Scrape function
-router.get("/", function(req, res){
-    
-        //remove all articles the user has not saved.
-        var count = 0;
-        
-        var collection = db.collection('articles');
-        collection.deleteMany({ saved: false}, function(err,result){
-            console.log("Unsaved articles removed.")
-        })
-        request("http://www.c-sharpcorner.com/" , function(error, response, html){
-            var $ = cheerio.load(html);
-            $("ul#RecentActivity li.media div.media-body").each(function(i, element){
-                var results = {};
-                results.title = $(this).children("a").text();
-                results.link = $(this).children("a").attr("href");
-                results.author = $(this).children("a.author").text();
-    
-                // Using our Article model, create a new entry
-                // This effectively passes the result object to the entry (and the title and link)
-                var entry = new Article(results);
-                // Now, save that entry to the db
-                entry.save(function(err, doc, next) {
-                  // Log any errors
-                  if (err) {
-                    console.log(err);
-                  }
-                });
-            });
-            res.redirect("/articles")
-        });
-    });
+	app.get("/api/scrape", async (req, res) => {
+		//remove all articles the user has not saved.
+		var count = 0;
+		var collection = db.collection("articles");
+		collection.deleteMany({ saved: false }, function(err, result) {
+			console.log("Unsaved articles removed.");
+		});
+		await request("https://news.ycombinator.com/", function(
+			error,
+			response,
+			html
+		) {
+			var $ = cheerio.load(html);
+			$("span.comhead").each(function(i, element) {
+				var title = $(this).prev();
+				var subtext = title
+					.parent()
+					.parent()
+					.next()
+					.children(".subtext")
+					.children();
+				var results = {};
+				results.title = title.text();
+				results.link = title.attr("href");
+				results.author = $(subtext)
+					.eq(1)
+					.text();
+				// Using our Article model, create a new entry
+				// This effectively passes the result object to the entry (and the title and link)
+				var entry = new Article(results);
+				// Now, save that entry to the db
+				entry.save(function(err, doc, next) {
+					// Log any errors
+					if (err) {
+						console.log(err);
+					}
+				});
+			});
+			res.redirect("/articles");
+		});
+	});
 
-//Get Articles
-router.get("/articles", function(req, res) {
-    // Grab every doc in the Articles array
-    Article.find({}, function(error, doc) {
-      // Log any errors
-      if (error) {
-        console.log(error);
-      }
-      // Or send the doc to the browser as a json object
-      else {
-        var articleList = {articles: doc}
-        res.render("articles",articleList);
-      }
-    });
-  });
+	//Get Articles
+	app.get("/api/articles", async (req, res) => {
+		// Grab every doc in the Articles array
+		const articleList = await Article.find({}).select({});
+		res.send(articleList);
+	});
 
-//find saved articles
-router.get("/saved", function(req, res) {
-    // Grab every doc in the Articles array
-    Article.find({saved: true}, function(error, doc) {
-      // Log any errors
-      if (error) {
-        console.log(error);
-      }
-      // Or send the doc to the browser as a json object
-      else {
-        var articleList = {articles: doc}
-        res.render("articles",articleList);
-      }
-    });
-  });
-  
-  // Get a document item and change its saved value to the opposite
-  router.post("/saved/:id", function(req, res) {
-    var isTrueSet = req.body.saved === "true";
-      Article.findOneAndUpdate({_id: req.params.id}, {$set:{saved: !isTrueSet}}
-      , function(err, results){
-        if(err){
-          console.log(err);
-        }else{
-         res.redirect("/articles");
-        }
-      });
-});
+	//find saved articles
+	app.get("/api/saved", async (req, res) => {
+		// Grab every doc in the Articles array
+		const savedArticleList = await Article.find({ saved: true }).select({});
+		res.send(savedArticleList);
+	});
 
+	// Get a document item and change its saved value to the opposite
+	app.post("/api/changeStatus", async (req, res) => {
+		Article.updateOne(
+			{ _id: req.body._id },
+			{ $set: { saved: !req.body.saved } }
+		).exec();
+		const articleList = await Article.find({}).select({});
+		res.send(articleList);
+	});
 
-router.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../newscrapper/build/index.html"));
-  });
-  
-module.exports = router;
+	app.post("/api/removeSavedArticle", async (req, res) => {
+		Article.updateOne(
+			{ _id: req.body._id },
+			{ $set: { saved: !req.body.saved } }
+		).exec();
+		const savedArticleList = await Article.find({ saved: true }).select({});
+		res.send(savedArticleList);
+	});
+
+	app.use(function(req, res) {
+		res.sendFile(path.join(__dirname, "../client/build/index.html"));
+	});
+};

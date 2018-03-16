@@ -6,16 +6,21 @@
 	"dependencies": {
 		"body-parser": "^1.18.2",
 		"cheerio": "^1.0.0-rc.2",
+		"concurrently": "^3.5.1",
 		"express": "^4.16.2",
 		"method-override": "^2.3.10",
 		"mongoose": "^4.12.6",
+		"nodemon": "^1.17.1",
 		"react": "^16.0.0",
 		"react-dom": "^16.0.0",
 		"request": "^2.83.0"
 	},
 	"devDependencies": {},
 	"scripts": {
-		"start": "node server.js"
+		"client": "npm run start --prefix client",
+		"start": "node index.js",
+		"server": "nodemon index.js",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
 	},
 	"repository": {
 		"type": "git",
