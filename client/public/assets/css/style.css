@@ -1,21 +1,37 @@
-h1 {
+h1,
+h5 {
 	text-align: center;
 }
 
-.container {
-	margin: 75px !important;
+nav a:hover {
+	color: white;
+	cursor: pointer;
 }
 
-.commentButton,
-.saveButton {
-	float: right;
-	margin: 5px;
+.side-nav a:hover {
+	color: white;
+	cursor: pointer;
 }
 
-#saveComment {
-	float: right;
+.card-content a {
+	color: black;
+	cursor: pointer;
+}
+
+.card-content a:hover {
+	color: white;
+	cursor: pointer;
+}
+
+a,
+a:hover {
+	text-decoration: none;
+}
+
+form {
+	display: inline;
 }
 
 body {
-	padding-top: 70px;
+	background-color: black;
 }

@@ -1,9 +1,10 @@
 const path = require("path");
-var request = require("request");
-var cheerio = require("cheerio");
-var Article = require("../models/Articles");
-var Comment = require("../models/Comments");
+const request = require("request");
+const cheerio = require("cheerio");
+const Article = require("../models/Articles");
+const Comment = require("../models/Comments");
 const mongoose = require("mongoose");
+const { ArticleInformation } = require("../helperClass/helper");
 
 module.exports = app => {
 	//Scrape function
@@ -89,6 +90,34 @@ module.exports = app => {
 		).exec();
 		const savedArticleList = await Article.find({ saved: true }).select({});
 		res.send(savedArticleList);
+	});
+
+	app.get("/api/:id/comments", async (req, res) => {
+		const article = await Article.findOne({ _id: req.params.id });
+		const comments = await Comment.find({ article: req.params.id });
+		const articleInformation = await new ArticleInformation(
+			article._id,
+			article.title,
+			comments
+		);
+		await res.send(articleInformation);
+	});
+
+	// Create a new note and assign it to a specific article
+	app.post("/api/:id", async (req, res) => {
+		const { title, body } = req.body;
+		const newComment = new Comment({
+			title,
+			body,
+			article: req.params.id
+		});
+		const doc = await newComment.save();
+		await Article.findOneAndUpdate(
+			{ _id: req.params.id },
+			{ $push: { comments: doc._id } }
+		).exec();
+		const article = await Article.findOne({ _id: req.params.id }).select({});
+		res.send(article);
 	});
 
 	app.use(function(req, res) {

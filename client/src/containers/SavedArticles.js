@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import * as actions from "../actions/index";
+import { Link } from "react-router-dom";
 
 class SavedArticles extends Component {
 	componentDidMount() {
@@ -11,18 +11,34 @@ class SavedArticles extends Component {
 	renderSavedArticles() {
 		return this.props.savedArticles.map(article => {
 			return (
-				<div>
-					<div className="panel panel-info">
-						<div className="panel-heading">{article.title}</div>
-						<div className="panel-body">
-							<a href={article.link}>Link: {article.link}</a>
-							<p>Author: {article.author}</p>
-							<button
-								className="red btn-flat white-text"
-								onClick={() => this.props.removeSavedArticle(article)}
-							>
-								Remove from Saved Articles
-							</button>
+				<div key={article._id} className="row">
+					<div>
+						<div className="card panel amber accent-4">
+							<div className="card-content black-text">
+								<span className="card-title">{article.title}</span>
+								<p>
+									Link:
+									<a href={article.link}>{article.link}</a>{" "}
+								</p>
+								<p>Author: {article.author}</p>
+							</div>
+							<div className="card-action">
+								<button
+									className="red darken-4 btn-flat white-text"
+									style={{ marginRight: "10px" }}
+									onClick={() => this.props.removeSavedArticle(article)}
+								>
+									<i class=" small material-icons right">save</i>
+									Remove from Saved Articles
+								</button>
+								<Link
+									className="indigo btn btn-flat  white-text"
+									to={`/${article._id}/comments`}
+								>
+									<i class=" small material-icons right">comment</i>
+									View Comments
+								</Link>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -32,8 +48,8 @@ class SavedArticles extends Component {
 
 	render() {
 		return (
-			<div className="container" style={{ marginTop: "75px" }}>
-				<div className="jumbotron bg-primary">
+			<div className="container" style={{ marginTop: "25px" }}>
+				<div className="jumbotron indigo white-text">
 					<h1>Saved Articles</h1>
 				</div>
 				{this.renderSavedArticles()}
@@ -45,9 +61,5 @@ class SavedArticles extends Component {
 function mapStateToProps({ savedArticles }) {
 	return { savedArticles };
 }
-
-// function mapDispatchToProps(dispatch) {
-// 	return bindActionCreators({ fetchComments: fetchComments }, dispatch);
-// }
 
 export default connect(mapStateToProps, actions)(SavedArticles);

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as actions from "../actions/index";
+import { Link } from "react-router-dom";
+import { fetchArticles, changeStatus } from "../actions/index";
+import _ from "lodash";
 
 class Articles extends Component {
 	componentDidMount() {
@@ -12,18 +13,22 @@ class Articles extends Component {
 		if (article.saved) {
 			return (
 				<button
-					className="red btn-flat white-text"
+					className="red darken-4 btn-flat white-text"
+					style={{ marginRight: "10px" }}
 					onClick={() => this.props.changeStatus(article)}
 				>
+					<i class=" small material-icons right">save</i>
 					Remove from Saved Articles
 				</button>
 			);
 		} else {
 			return (
 				<button
-					className="teal btn-flat right white-text"
+					className="indigo btn-flat  white-text"
+					style={{ marginRight: "10px" }}
 					onClick={() => this.props.changeStatus(article)}
 				>
+					<i class=" small material-icons right">save</i>
 					Save Article
 				</button>
 			);
@@ -31,14 +36,33 @@ class Articles extends Component {
 	}
 
 	renderArticles() {
-		return this.props.articles.map(article => {
+		if (!this.props.articles) {
+			return <div>Loading</div>;
+		}
+		return _.map(this.props.articles, article => {
 			return (
-				<div key={article._id} className="panel panel-info">
-					<div className="panel-heading">{article.title}</div>
-					<div className="panel-body">
-						<a href={article.link}>Link: {article.link}</a>
-						<p>Author: {article.author}</p>
-						{this.isSaved(article)}
+				<div key={article._id} className="row">
+					<div>
+						<div className="card panel amber accent-4">
+							<div className="card-content black-text">
+								<span className="card-title">{article.title}</span>
+								<p>
+									Link:
+									<a href={article.link}>{article.link}</a>{" "}
+								</p>
+								<p>Author: {article.author}</p>
+							</div>
+							<div className="card-action">
+								{this.isSaved(article)}
+								<Link
+									className="indigo btn btn-flat  white-text"
+									to={`/${article._id}/comments`}
+								>
+									<i class=" small material-icons right">comment</i>
+									View Comments
+								</Link>
+							</div>
+						</div>
 					</div>
 				</div>
 			);
@@ -47,8 +71,8 @@ class Articles extends Component {
 
 	render() {
 		return (
-			<div className="container" style={{ marginTop: "75px" }}>
-				<div className="jumbotron bg-primary">
+			<div className="container" style={{ marginTop: "25px" }}>
+				<div className="jumbotron indigo white-text">
 					<h1>Scraped Articles</h1>
 				</div>
 				{this.renderArticles()}
@@ -57,12 +81,10 @@ class Articles extends Component {
 	}
 }
 
-function mapStateToProps({ articles }) {
-	return { articles };
+function mapStateToProps(state) {
+	return { articles: state.articles };
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return bindActionCreators({ fetchComments: fetchComments }, dispatch);
-// }
-
-export default connect(mapStateToProps, actions)(Articles);
+export default connect(mapStateToProps, { fetchArticles, changeStatus })(
+	Articles
+);

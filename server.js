@@ -18,7 +18,6 @@ mongoose.connect(
 
 const db = mongoose.connection;
 
-require("./routes/comments")(app);
 require("./routes/index")(app);
 
 if (process.env.NODE_ENV === "production") {
