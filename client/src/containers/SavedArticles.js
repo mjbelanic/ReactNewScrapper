@@ -28,14 +28,14 @@ class SavedArticles extends Component {
 									style={{ marginRight: "10px" }}
 									onClick={() => this.props.removeSavedArticle(article)}
 								>
-									<i class=" small material-icons right">save</i>
+									<i className=" small material-icons right">save</i>
 									Remove from Saved Articles
 								</button>
 								<Link
 									className="indigo btn btn-flat  white-text"
 									to={`/${article._id}/comments`}
 								>
-									<i class=" small material-icons right">comment</i>
+									<i className=" small material-icons right">comment</i>
 									View Comments
 								</Link>
 							</div>

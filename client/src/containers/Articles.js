@@ -17,7 +17,7 @@ class Articles extends Component {
 					style={{ marginRight: "10px" }}
 					onClick={() => this.props.changeStatus(article)}
 				>
-					<i class=" small material-icons right">save</i>
+					<i className=" small material-icons right">save</i>
 					Remove from Saved Articles
 				</button>
 			);
@@ -28,7 +28,7 @@ class Articles extends Component {
 					style={{ marginRight: "10px" }}
 					onClick={() => this.props.changeStatus(article)}
 				>
-					<i class=" small material-icons right">save</i>
+					<i className=" small material-icons right">save</i>
 					Save Article
 				</button>
 			);
@@ -58,7 +58,7 @@ class Articles extends Component {
 									className="indigo btn btn-flat  white-text"
 									to={`/${article._id}/comments`}
 								>
-									<i class=" small material-icons right">comment</i>
+									<i className=" small material-icons right">comment</i>
 									View Comments
 								</Link>
 							</div>

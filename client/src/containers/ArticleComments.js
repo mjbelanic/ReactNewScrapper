@@ -46,7 +46,7 @@ class ArticleComments extends Component {
 						className="indigo btn btn-flat right white-text"
 						to={`/${this.props.comments.id}/newComment`}
 					>
-						<i class=" small material-icons right">comment</i>
+						<i className=" small material-icons right">comment</i>
 						Add a Comment
 					</Link>
 				</div>

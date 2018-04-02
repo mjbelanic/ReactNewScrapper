@@ -44,12 +44,12 @@ class NewCommentForm extends Component {
 								className="red darken-4 btn btn-flat white-text"
 								style={{ marginRight: "10px" }}
 							>
-								<i class=" small material-icons right">cancel</i>
+								<i className=" small material-icons right">cancel</i>
 								Cancel
 							</Link>
 
 							<button type="submit" className="indigo btn btn-flat white-text">
-								<i class=" small material-icons right">create</i>
+								<i className=" small material-icons right">create</i>
 								Submit
 							</button>
 						</form>

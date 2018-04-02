@@ -5,7 +5,6 @@ const app = express();
 require("./models/Articles");
 require("./models/Comments");
 
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
