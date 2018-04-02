@@ -22,8 +22,9 @@
 		"start": "node server.js",
 		"server": "nodemon server.js",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
-		"dev2":"node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+		"dev2": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+		"heroku-postbuild":
+			"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
 		"postinstall": "webpack -p"
 	},
 	"repository": {
