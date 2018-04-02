@@ -12,6 +12,7 @@
 		"mongoose": "^4.12.6",
 		"nodemon": "^1.17.1",
 		"path": "^0.12.7",
+		"path-parser": "^4.0.2",
 		"react": "^16.0.0",
 		"react-dom": "^16.0.0",
 		"request": "^2.83.0",
@@ -24,8 +25,7 @@
 		"start": "node server.js",
 		"server": "nodemon server.js",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
-		"heroku-postbuild":
-			"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
 	},
 	"repository": {
 		"type": "git",
