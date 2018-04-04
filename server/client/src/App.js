@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, HashRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./components/header";
 import Instructions from "./components/instructions";
 import Articles from "./containers/Articles";
@@ -12,7 +12,7 @@ import * as actions from "./actions";
 class App extends Component {
 	render() {
 		return (
-			<HashRouter>
+			<BrowserRouter>
 				<div>
 					<Header />
 					<Route exact={true} path="/" component={Instructions} />
@@ -21,7 +21,7 @@ class App extends Component {
 					<Route exact path="/:id/comments" component={ArticleComments} />
 					<Route exact path="/:id/newComment" component={NewCommentForm} />
 				</div>
-			</HashRouter>
+			</BrowserRouter>
 		);
 	}
 }
