@@ -18,20 +18,17 @@
 	},
 	"devDependencies": {},
 	"scripts": {
-		"client": "npm run start --prefix client",
 		"start": "node server.js",
 		"server": "nodemon server.js",
+		"client": "npm run start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+		"heroku-postbuild":
+			"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mjbelanic/ReactNewScrapper.git"
 	},
-	"keywords": [],
 	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/mjbelanic/ReactNewScrapper/issues"
-	}
+	"license": "ISC"
 }
