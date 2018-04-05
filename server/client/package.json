@@ -9,8 +9,8 @@
 	},
 	"dependencies": {
 		"axios": "^0.18.0",
+		"lodash": "^4.17.5",
 		"materialize-css": "^0.100.2",
-		"path": "^0.12.7",
 		"react": "^16.0.0",
 		"react-dom": "^16.0.0",
 		"react-redux": "^5.0.7",

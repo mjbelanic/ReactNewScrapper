@@ -8,6 +8,7 @@
 		"cheerio": "^1.0.0-rc.2",
 		"concurrently": "^3.5.1",
 		"express": "^4.16.2",
+		"lodash": "^4.17.5",
 		"method-override": "^2.3.10",
 		"mongoose": "^4.12.6",
 		"nodemon": "^1.17.1",
