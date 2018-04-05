@@ -1,0 +1,37 @@
+h1,
+h5 {
+	text-align: center;
+}
+
+nav a:hover {
+	color: white;
+	cursor: pointer;
+}
+
+.side-nav a:hover {
+	color: white;
+	cursor: pointer;
+}
+
+.card-content a {
+	color: black;
+	cursor: pointer;
+}
+
+.card-content a:hover {
+	color: white;
+	cursor: pointer;
+}
+
+a,
+a:hover {
+	text-decoration: none;
+}
+
+form {
+	display: inline;
+}
+
+body {
+	background-color: black;
+}
