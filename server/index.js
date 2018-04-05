@@ -9,10 +9,10 @@ app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-	process.env.MONGODB_URI || "mongodb://localhost/ReactNewScrapper",
-	{
-		useMongoClient: true
-	}
+  process.env.MONGODB_URI || "mongodb://localhost/ReactNewScrapper",
+  {
+    useMongoClient: true
+  }
 );
 
 const db = mongoose.connection;
@@ -20,13 +20,12 @@ const db = mongoose.connection;
 require("./routes/index")(app);
 
 if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 
-	app.use(express.static("client/build"));
-
-	const path = require("path");
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-	});
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 const PORT = process.env.PORT || 5000;
