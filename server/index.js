@@ -15,8 +15,6 @@ mongoose.connect(
   }
 );
 
-const db = mongoose.connection;
-
 require("./routes/index")(app);
 
 if (process.env.NODE_ENV === "production") {
