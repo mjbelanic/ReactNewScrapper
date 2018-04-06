@@ -18,11 +18,11 @@ mongoose.connect(
 require("./routes/index")(app);
 
 if (process.env.NODE_ENV === "production") {
-  console.log("NODE_END === production");
+  console.log("NODE_ENV === production");
+  app.use(express.static("client/build"));
   app.get("*", (req, res) => {
     res.send("hi");
   });
-  // app.use(express.static("client/build"));
   //
   // const path = require("path");
   // app.get("*", (req, res) => {
