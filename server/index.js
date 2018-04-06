@@ -20,7 +20,7 @@ require("./routes/index")(app);
 if (process.env.NODE_ENV === "production") {
   console.log("NODE_ENV === production");
   app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
+  app.get("/articles", (req, res) => {
     res.send("hi");
   });
   //
