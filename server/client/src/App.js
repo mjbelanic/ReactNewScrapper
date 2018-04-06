@@ -13,12 +13,14 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Header />
-        <Route exact={true} path="/" component={Instructions} />
-        <Route exact path="/articles" component={Articles} />
-        <Route exact path="/saved" component={SavedArticles} />
-        <Route exact path="/:id/comments" component={ArticleComments} />
-        <Route exact path="/:id/newComment" component={NewCommentForm} />
+        <div>
+          <Header />
+          <Route exact={true} path="/" component={Instructions} />
+          <Route exact path="/articles" component={Articles} />
+          <Route exact path="/saved" component={SavedArticles} />
+          <Route exact path="/:id/comments" component={ArticleComments} />
+          <Route exact path="/:id/newComment" component={NewCommentForm} />
+        </div>
       </BrowserRouter>
     );
   }
