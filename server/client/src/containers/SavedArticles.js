@@ -18,8 +18,7 @@ class SavedArticles extends Component {
 								<span className="card-title">{article.title}</span>
 								<p>
 									Link:
-									<a href={article.link}>{article.link}</a>{" "}
-								</p>
+									<a href={article.link}>{article.link}</a>
 								<p>Author: {article.author}</p>
 							</div>
 							<div className="card-action">

@@ -48,7 +48,7 @@ class Articles extends Component {
                 <span className="card-title">{article.title}</span>
                 <p>
                   Link:
-                  <a href={article.link}>{article.link}</a>{" "}
+                  <a href={article.link}>{article.link}</a>
                 </p>
                 <p>Author: {article.author}</p>
               </div>
