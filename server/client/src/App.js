@@ -6,10 +6,8 @@ import Articles from "./containers/Articles";
 import SavedArticles from "./containers/SavedArticles";
 import ArticleComments from "./containers/ArticleComments";
 import NewCommentForm from "./containers/NewCommentForm";
-import { connect } from "react-redux";
-import * as actions from "./actions";
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <BrowserRouter>
@@ -25,5 +23,3 @@ class App extends Component {
     );
   }
 }
-
-export default connect(null, actions)(App);
